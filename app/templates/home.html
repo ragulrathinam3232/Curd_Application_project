@@ -1,0 +1,43 @@
+<head>
+    <title>GAME</title>
+</head>
+<body>
+
+<form action="karthi" method="POST">
+        {% csrf_token %}
+    Name :<input type="text" name= "name" placeholder="name"/><br>
+    Age:<input type="text" name="age" placeholder="age"/><br>
+    Notes:<input type="text" name="notes" placeholder="notes"/><br>
+    <button type="submit"> submit </button> 
+    <button type="reset"> close </button> 
+    {%if datas %}
+    <table>
+        <thead>
+            <tr>
+                <th>s.no</th>
+                <th>name</th>
+                <th>age</th>
+                <th>notes</th>
+                <th>update</th>
+                <th>delete</th>
+
+                
+            </tr>
+        </thead>
+        {% for da in datas %}
+        <tbody>
+            <tr>
+                <td>{{ forloop.counter}}</td>
+                <td>{{da.Name}}</td>
+                <td>{{da.Age}}</td>
+                <td>{{da.Notes}}</td>
+                <td><a class="btn btn-success" href="update/{{da.id}}">updates</a></td>
+                <td><a class="btn btn-danger" href="delete/{{da.id}}">delete</a></td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% endif %}
+</form>
+</body>
+</html>

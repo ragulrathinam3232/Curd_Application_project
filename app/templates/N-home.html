@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Application Layout</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container { margin-top: 30px; }
+        .card-header, .btn-success, .btn-warning, .btn-danger { background-color: #007bff; }
+        .btn-success { background-color: #28a745; border: none; }
+        .btn-danger { background-color: #dc3545; border: none; }
+        .btn-warning { background-color: #ffc107; border: none; }
+        .table-responsive { border-radius: 8px; overflow: hidden; }
+        .table thead { background-color: #343a40; color: white; }
+        h2 { color: #007bff; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center mb-4">CRUD Application</h2>
+
+    <!-- Input Form (Add/Edit Item) -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header text-white bg-primary">
+            <h5 class="mb-0">Add or Edit Item</h5>
+        </div>
+        <div class="card-body">
+            <form action="karthi" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="Enter name" required>
+                    <label>Age</label>
+                    <input type="text" class="form-control" name="age" placeholder="Enter age" required>
+                    <label>Notes</label>
+                    <input type="text" class="form-control" name="notes" placeholder="Enter notes">
+                </div>
+                <button type="submit" class="btn btn-success mr-2">Add</button>
+                <button type="reset" class="btn btn-danger">Clear</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Item List (Dynamic from Django) -->
+    <h5 class="text-center mb-3">List of Items</h5>
+    <div class="table-responsive shadow-sm">
+        {% if datas %}
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Notes</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for da in datas %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ da.Name }}</td>
+                            <td>{{ da.Age }}</td>
+                            <td>{{ da.Notes }}</td>
+                            <td><a class="btn btn-sm btn-warning" href="update/{{ da.id }}">Update</a></td>
+                            <td><a class="btn btn-sm btn-danger" href="delete/{{ da.id }}">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-center text-muted">No data available.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Bootstrap JS, Popper.js, and jQuery (for Bootstrap components) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
